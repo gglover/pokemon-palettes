@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>pokemon palettes</title>
+		<meta charset="utf-8" />
+		<link href="pokemon.css" type="text/css" rel="stylesheet" />
+	</head>
+	<body>
+		<div id="app">
+			<div id="color_graph">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
+			<canvas id="pokemon" width="1000" height="1000"></canvas>
+			<canvas id="processing-canvas"></canvas>
+			<div id="input_container">
+				<div id="search_box">
+					<img id="search_button" src="images/search_new.png"/>
+					<input></input>
+				</div>
+				<!--<div id="buttons">
+					<img src="images/left.png" class="left light-arrow"/>
+					<img src="images/right.png" class="right light-arrow"/>
+					<img src="images/left_dark.png" class="left dark-arrow"/>
+					<img src="images/right_dark.png" class="right dark-arrow"/>
+				</div>-->
+				<div id="information">
+					<a target="_tab"></a>
+				</div>
+			</div>
+		</div>
+		<footer>
+			navigate with the arrow keys. be happy. <a href="http://www.gus-glover.com">(gus glover 2013)</a>
+		</footer>
+	</body>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="scripts/libs/underscore.min.js" rel="text/javascript"></script>
+	<script src="scripts/libs/backbone.min.js" rel="text/javascript"></script>
+	<script src="scripts/pokemonData.js" rel="text/javascript"></script>
+	<script src="scripts/pokemonModel.js" rel="text/javascript"></script>
+	<script src="scripts/pokemonView.js" rel="text/javascript"></script>
+	<script src="scripts/main.js" rel="text/javascript"></script>
+</html>

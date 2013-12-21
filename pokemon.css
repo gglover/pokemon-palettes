@@ -1,0 +1,148 @@
+body {
+	margin : 3% 3% 4% 3%;
+	background-color: black;
+	overflow: hidden;
+}
+
+@font-face {
+	font-family: 'pokemon';
+	src: url('pokemon-gb.ttf') format('truetype');
+	font-weight: normal;
+    font-style: normal;
+}
+
+#app {
+	font-family: 'pokemon';
+	margin : 0px;
+	width: 100%;
+	height: 100%;
+	overflow : hidden;
+	background-color: black;
+	border-radius: 2px;
+	position: relative;
+}
+
+
+#processing-canvas {
+	visibility: hidden;
+}
+
+#pokemon {
+	margin-left : 25%;
+	z-index : 5;
+	top : -25px;
+}
+
+#color_graph, #pokemon {
+	position : absolute;
+	left : 0px;
+}
+
+#color_graph {
+	top : 0px;
+	height : 100%;
+}
+
+.bar {
+	width : 0px;
+	height : 0px;
+	font-size: 20px;
+	color: transparent;
+	cursor: pointer;
+}
+
+.bar:hover {
+	color: black;
+}
+
+#search_box img, input {
+	height : 50px;
+}
+
+
+
+
+#input_container {
+	top : 10px;
+	right : 10px;
+	z-index : 10;
+	position : absolute;
+}
+
+#search_box {
+	padding : 5px;
+	display: none;
+}
+
+input {
+	width : 330px;
+	font-size: 28px;
+	border : 4px solid;
+	padding : 10px 5px 0px 5px;
+	outline : none;
+	display : inline;
+	font-family: 'pokemon';
+}
+
+#search_box img {
+	vertical-align: bottom;
+}
+
+#input_container img {
+	opacity : 0.8;
+	margin-left: 10px;
+}
+
+#input_container img:hover {
+	opacity : 1.0;
+}
+
+#input_container.dark .dark-arrow {
+	display: none;
+}
+
+#input_container.light .light-arrow {
+	display: none;
+}
+
+#information {
+	text-align: right;
+	font: 'pokemon';
+	padding: 4px;
+}
+
+#information a {
+	text-decoration: none;
+	color: black;
+}
+
+#information a:hover {
+	text-decoration: none;
+	color: #888;
+}
+
+.left, .right {
+	width : 25px;
+}
+
+#buttons {
+	padding : 5px;
+	display : none;
+}
+
+img:hover {
+	cursor : hand;
+}
+
+
+footer {
+	font-size: 12px;
+	color: #666;
+	text-align: right;
+	margin-top: 10px;
+	font-family: 'pokemon';
+}
+
+footer a {
+	color: #888;
+}
