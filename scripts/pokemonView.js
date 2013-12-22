@@ -6,7 +6,11 @@ var PokemonView = Backbone.View.extend({
 	RENDER_STYLES: ['sorted', 'sorted-uniform', 'grouped', 'grouped-uniform'],
 
 	initialize: function() {
-		//pick a pokemon at random to start
+		
+		//Manual binds... outside scope of events hash
+		this.calculateCanvasZoom();
+		 $(window).bind("resize.app", _.bind(this.calculateCanvasZoom, this));
+
 
 		this.listenTo(this.model, "loadedPokemon", this.renderPokemon);
 		this.listenTo(this.model, "loadedPokemon", this.renderControls);
@@ -24,13 +28,13 @@ var PokemonView = Backbone.View.extend({
 
 	events: {
 		"click #search_button": "search",
-		"click .bar": "changeBarRenderStyle",
-		"click .left": "prevPokemon",
-		"click .right": "nextPokemon",
-		"keypress input": "searchOnEnter",
-		"keydown": "navigateLeftRight",
-		"mouseover #input_container": "displayArrows",
-		"mouseleave #input_container": "hideArrows"
+		"click .bar":           "changeBarRenderStyle",
+		"click .left":          "prevPokemon",
+		"click .right":         "nextPokemon",
+		"keypress input":       "searchOnEnter",
+		"keydown":              "navigateLeftRight",
+		"focus input":          "prepSearch",
+		"blur input":           "resetName"
 	},
 
 	currentRenderStyle: 'sorted',
@@ -45,9 +49,14 @@ var PokemonView = Backbone.View.extend({
 			this.$input.css({ 'color' : 'red' });
 			setTimeout(function () { _this.$input.css({ 'color' : prevColor }); }, 200);
 		} else {
-			document.activeElement = this.el;
 			this.model.setPokemon(number);
+			this.$input.blur();
 		}
+	},
+
+	calculateCanvasZoom: function() {
+		this.ZOOM = Math.floor($(document).height() / 80);
+		this.renderPokemon();
 	},
 
 	searchOnEnter: function(e) {
@@ -65,6 +74,14 @@ var PokemonView = Backbone.View.extend({
 		}
 	},
 
+	prepSearch: function() {
+		this.$input.val('');
+	},
+
+	resetName: function() {
+		this.$input.val( globals.ALL_POKEMON[this.model.get('number') - 1] );
+	},
+
 	nextPokemon: function() {
 		var next = (this.model.get("number") % globals.TOTAL_POKEMON) + 1;
 		this.model.setPokemon(next);
@@ -79,18 +96,6 @@ var PokemonView = Backbone.View.extend({
 		curIndex = _.indexOf(this.RENDER_STYLES, this.currentRenderStyle);
 		this.currentRenderStyle = this.RENDER_STYLES[(curIndex + 1) % this.RENDER_STYLES.length];
 		this.renderBars();
-	},
-
-	displayArrows: function() {
-		$('#buttons').slideDown(
-			{easing : 'linear', duration : 50}
-		);
-	},
-
-	hideArrows: function() {
-		$('#buttons').slideUp(
-			{easing : 'linear', duration : 50}
-		);
 	},
 
 	getInput: function() {
@@ -143,14 +148,12 @@ var PokemonView = Backbone.View.extend({
 		
 		//Input: se black arrows if the background is too light to permit others
 		var light = this.isLight(colors[0][0]);
-		var vibrance = (light ? 'light' : 'dark');
 		this.$input.css({
 			'color'       : colors[0 + light][0],
 			'border-color': colors[1 + light][0]
-		})
-		.val( globals.ALL_POKEMON[this.model.get('number') - 1] );
-
-		this.$input_container.removeClass("dark light").addClass(vibrance);
+		});
+		this.resetName();
+		
 
 		this.$search_box.css({
 			'background-color': colors[2 + light][0]

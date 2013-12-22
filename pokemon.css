@@ -81,6 +81,8 @@ input {
 	padding : 10px 5px 0px 5px;
 	outline : none;
 	display : inline;
+	height: 52px;
+	line-height: 52px;
 	font-family: 'pokemon';
 }
 
