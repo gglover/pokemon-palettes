@@ -161,7 +161,7 @@ var PokemonView = Backbone.View.extend({
 
 		//Dark search icon if background is light
 		light = this.isLight(colors[2 + light][0]);
-		var src = light ? 'images/search_dark.png' : 'images/search_new	.png';
+		var src = light ? 'images/search_dark.png' : 'images/search_new.png';
 		this.$search_box.find('img').attr({'src' : src });
 
 		//Background color
