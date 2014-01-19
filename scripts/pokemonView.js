@@ -15,12 +15,14 @@ var PokemonView = Backbone.View.extend({
 		this.listenTo(this.model, "loadedPokemon", this.renderPokemon);
 		this.listenTo(this.model, "loadedPokemon", this.renderControls);
 		this.listenTo(this.model, "loadedPokemon", this.renderBars);
+		this.listenTo(this.model, "loadedPokemon", this.renderStripes);
 		this.listenTo(this.model, "loadedPokemon", this.updateInformation);
 		this.$input           = $('input');
 		this.bars             = $('.bar');
 		this.$search_box      = $('#search_box');
 		this.$input_container = $('#input_container');
 		this.$info            = $('#information a');
+		this.$fullScreen      = $('#full_screen');
 
 	},
 
@@ -34,10 +36,14 @@ var PokemonView = Backbone.View.extend({
 		"keypress input":       "searchOnEnter",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
-		"blur input":           "resetName"
+		"click #full_screen":   "toggleFullScreen",
+		"click .stripe":        "nextStripeColor"
 	},
 
 	currentRenderStyle: 'sorted',
+
+	//Used as a count of write locks for the animation bars
+	isDrawing: false,
 
 	search: function() {
 		var number = this.getInput();
@@ -47,10 +53,9 @@ var PokemonView = Backbone.View.extend({
 		if (number > globals.LAST_POKEMON || number <= 0) {
 			var prevColor = this.$input.css('color');
 			this.$input.css({ 'color' : 'red' });
-			setTimeout(function () { _this.$input.css({ 'color' : prevColor }); }, 200);
+			setTimeout(function () { _this.$input.css({ 'color' : prevColor }); }, 100);
 		} else {
-			this.model.setPokemon(number);
-			this.$input.blur();
+			this.setPokemon(number);
 		}
 	},
 
@@ -74,6 +79,28 @@ var PokemonView = Backbone.View.extend({
 		}
 	},
 
+	isFullScreen: false,
+	toggleFullScreen: function() {
+		if (this.isFullScreen) {
+			this.$el.removeClass('full-screen');
+			this.$fullScreen.text('+');
+		} else {
+			this.$el.addClass('full-screen');
+			this.$fullScreen.text('-');
+		}
+		this.isFullScreen = !this.isFullScreen;
+	},
+
+	currentStripeIndices: [1, 2, 3],
+	nextStripeColor: function(e) {
+		var stripeNum = $(e.currentTarget).data('num');
+		var colors = this.model.get('aggregateArray');
+		this.currentStripeIndices[stripeNum]++;
+		$(e.currentTarget).css({
+			'background': colors[this.currentStripeIndices[stripeNum] % colors.length][0] 
+		});
+	},
+
 	prepSearch: function() {
 		this.$input.val('');
 	},
@@ -84,12 +111,12 @@ var PokemonView = Backbone.View.extend({
 
 	nextPokemon: function() {
 		var next = (this.model.get("number") % globals.TOTAL_POKEMON) + 1;
-		this.model.setPokemon(next);
+		this.setPokemon(next);
 	},
 
 	prevPokemon: function() {
 		var prev = this.model.get("number") - 1 || globals.TOTAL_POKEMON;
-		this.model.setPokemon(prev);
+		this.setPokemon(prev);
 	},
 
 	changeBarRenderStyle: function() {
@@ -99,8 +126,15 @@ var PokemonView = Backbone.View.extend({
 	},
 
 	getInput: function() {
-		var data = this.$input.val();
+		var data = this.$input.val().toLowerCase();
 		return (parseInt(data) ? parseInt(data) : (_.indexOf(globals.ALL_POKEMON, data) + 1));
+	},
+
+	setPokemon: function(num) {
+		if (!this.isDrawing) {
+			this.isDrawing = true;
+			this.model.setPokemon(num);
+		}
 	},
 
 	renderPokemon: function() {
@@ -129,16 +163,37 @@ var PokemonView = Backbone.View.extend({
 		}
 
 		for (var i = 1; i < colors.length; i++) {
-			$(this.bars[i]).animate({
+
+			$(this.bars[i])
+			.text(colors[i][0])
+
+			.css({ 'background-color': colors[i][0] })
+			.animate({
 				'height'          : 100.0 / (colors.length - 1.0) + '%',
 				'width'           : (isUniform ? colors[i][1] * this.BAR_SCALAR : this.UNIFORM_BAR_WIDTH) + 'px'
 			}, {
 				'easing'          : 'linear',
 				'duration'        : 100
-			})
-			.text(colors[i][0])
-			.css({ 'background-color': colors[i][0] });
+			});
+			
 		}
+		
+		var _this = this;
+		setTimeout(
+			function() {
+				_this.isDrawing = false;
+			}, 150
+		);
+	},
+
+	renderStripes: function() {
+		var colors = this.model.get("aggregateArray");
+		var stripes = $('.stripe');
+		for (var i = 0; i < 3; i++) {
+			console.log(colors);
+			$(stripes[i]).css('background', colors[i + 1][0]);
+		}
+		this.currentStripeIndices = [1, 2, 3];
 	},
 
 	renderControls: function() {

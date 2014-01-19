@@ -8,6 +8,7 @@
 	</head>
 	<body>
 		<div id="app">
+
 			<div id="color_graph">
 				<div class="bar"></div>
 				<div class="bar"></div>
@@ -24,8 +25,16 @@
 				<div class="bar"></div>
 				<div class="bar"></div>
 			</div>
+			
+			<div id="stripe_wrapper">
+				<div class="stripe" data-num="0"></div>
+				<div class="stripe" data-num="1"></div>
+				<div class="stripe" data-num="2"></div>
+			</div>
+			
 			<canvas id="pokemon" width="1000" height="1000"></canvas>
 			<canvas id="processing-canvas"></canvas>
+			
 			<div id="input_container">
 				<div id="search_box">
 					<img id="search_button" src="images/search_new.png" alt="search icon"/>
@@ -36,9 +45,14 @@
 				</div>
 			</div>
 		</div>
+
 		<footer>
 			navigate with the arrow keys. be happy. <a href="http://www.gus-glover.com">(gus glover 2013)</a>
 		</footer>
+
+		<div id="vis-wrapper">
+			<span id="full_screen">+</span>
+		</div>
 	</body>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="scripts/libs/underscore.min.js" rel="text/javascript"></script>

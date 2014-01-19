@@ -28,9 +28,25 @@ body {
 }
 
 #pokemon {
-	margin-left : 25%;
 	z-index : 5;
 	top : -25px;
+	margin-left: 25%;
+}
+
+
+#stripe_wrapper {
+	position: absolute;
+	left: 0;
+	z-index: 3;
+	height: 100%;
+	width: 100%;
+}
+
+.stripe {
+	width: 8.333%;
+	height: 100%;
+	visibility: hidden;
+	float: left;
 }
 
 #color_graph, #pokemon {
@@ -39,6 +55,7 @@ body {
 }
 
 #color_graph {
+	z-index: 4;
 	top : 0px;
 	height : 100%;
 }
@@ -131,6 +148,56 @@ input {
 	padding : 5px;
 	display : none;
 }
+
+
+/*Fullscreen mode */
+
+body.full-screen {
+	margin: 0;
+}
+
+body.full-screen #color_graph, body.full-screen #input_container {
+	display: none;
+}
+
+#vis-wrapper {
+	font-family: 'Verdana', Sans-serif;
+	font-size: 35px;
+	color: white;
+	position: absolute;
+	left: 10;
+	bottom: 15;
+	cursor: hand;
+	color: #666;
+	width: 30px;
+	height: 30px;
+	z-index: 10;
+}
+
+/* pls help me sass ;_; */
+
+body.full-screen #pokemon {
+	padding-left: 30%;
+	z-index: 0;
+	margin: 0px
+}
+
+body.full-screen .stripe {
+	visibility: visible;
+	cursor: e-resize;
+}
+
+body.full-screen #full_screen {
+	visibility: hidden;
+	font-family: Cursive;
+}
+
+body.full-screen #vis-wrapper:hover  #full_screen {
+	visibility: visible;
+	color: white;
+	font-family: 'pokemon';
+}
+
 
 img:hover {
 	cursor : hand;
