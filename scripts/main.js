@@ -4,5 +4,6 @@ globals.ALL_POKEMON = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charme
 globals.SPRITE_HEIGHT = 96;
 globals.TOTAL_POKEMON = 649;
 
-globals.pokeModel = new PokemonModel({ number : Math.ceil(Math.random() * globals.TOTAL_POKEMON) });
+globals.pokeModel = new PokemonModel();
+
 globals.pokeView = new PokemonView({model : globals.pokeModel});

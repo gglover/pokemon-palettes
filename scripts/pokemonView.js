@@ -34,6 +34,8 @@ var PokemonView = Backbone.View.extend({
 		"click .left":          "prevPokemon",
 		"click .right":         "nextPokemon",
 		"keypress input":       "searchOnEnter",
+		"swipeleft":            "prevPokemon",
+		"swiperight":           "nextPokemon",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
 		"click #full_screen":   "toggleFullScreen",
@@ -134,6 +136,7 @@ var PokemonView = Backbone.View.extend({
 		if (!this.isDrawing) {
 			this.isDrawing = true;
 			this.model.setPokemon(num);
+			location.replace('#' + this.model.get('name'));
 		}
 	},
 
@@ -190,7 +193,6 @@ var PokemonView = Backbone.View.extend({
 		var colors = this.model.get("aggregateArray");
 		var stripes = $('.stripe');
 		for (var i = 0; i < 3; i++) {
-			console.log(colors);
 			$(stripes[i]).css('background', colors[i + 1][0]);
 		}
 		this.currentStripeIndices = [1, 2, 3];

@@ -42,6 +42,10 @@ body {
 	width: 100%;
 }
 
+#full_screen {
+	font-size: 45px;
+}
+
 .stripe {
 	width: 8.333%;
 	height: 100%;
@@ -75,9 +79,6 @@ body {
 #search_box img, input {
 	height : 50px;
 }
-
-
-
 
 #input_container {
 	top : 10px;
@@ -161,7 +162,7 @@ body.full-screen #color_graph, body.full-screen #input_container {
 }
 
 #vis-wrapper {
-	font-family: 'Verdana', Sans-serif;
+	font-family: Monospace;
 	font-size: 35px;
 	color: white;
 	position: absolute;
@@ -188,14 +189,12 @@ body.full-screen .stripe {
 }
 
 body.full-screen #full_screen {
-	visibility: hidden;
-	font-family: Cursive;
+	opacity: 0.3;
 }
 
 body.full-screen #vis-wrapper:hover  #full_screen {
-	visibility: visible;
+	opacity: 1.0;
 	color: white;
-	font-family: 'pokemon';
 }
 
 

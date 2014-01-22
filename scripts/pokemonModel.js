@@ -8,6 +8,14 @@ var PokemonModel = Backbone.Model.extend({
 		for (var i = 0; i < globals.SPRITE_HEIGHT; i++) {
 			this.get('spriteData')[i] = [];
 		}
+
+		var reqPokemon = _.indexOf(globals.ALL_POKEMON, location.hash.substr(1, location.hash.length)) + 1;
+		if (reqPokemon < 1) {
+			this.set('number', Math.ceil(Math.random() * globals.TOTAL_POKEMON));
+		} else {
+			this.set('number', reqPokemon);
+		}
+
 		this.setPokemon(this.get('number'));
 	},
 
