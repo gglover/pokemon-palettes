@@ -11,6 +11,14 @@ body {
     font-style: normal;
 }
 
+.unselectable {
+	-moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 #app {
 	font-family: 'pokemon';
 	margin : 0px;
@@ -44,6 +52,7 @@ body {
 
 #full_screen {
 	font-size: 45px;
+	cursor: hand;
 }
 
 .stripe {
@@ -168,7 +177,7 @@ body.full-screen #color_graph, body.full-screen #input_container {
 	position: absolute;
 	left: 10;
 	bottom: 15;
-	cursor: hand;
+	cursor: pointer;
 	color: #666;
 	width: 30px;
 	height: 30px;

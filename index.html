@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>pokemon palettes</title>
+		<title>Pokemon Palettes</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="Explore color schemes and palettes generated from pokemon sprites!"/>
 		<link rel="icon" type="image/png" href="images/favicon.png"/>
@@ -32,7 +32,7 @@
 				<div class="stripe" data-num="2"></div>
 			</div>
 			
-			<canvas id="pokemon" width="1000" height="1000"></canvas>
+			<canvas id="pokemon" class="unselectable" width="1000" height="1000"></canvas>
 			<canvas id="processing-canvas"></canvas>
 			
 			<div id="input_container">
@@ -50,7 +50,7 @@
 			swipe or use the arrow keys to navigate. have fun. <a href="http://www.gus-glover.com">(gus glover 2013)</a>
 		</footer>
 
-		<div id="vis-wrapper">
+		<div id="vis-wrapper" class="unselectable">
 			<span id="full_screen">+</span>
 		</div>
 	</body>
