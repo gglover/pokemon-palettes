@@ -16,13 +16,14 @@ var PokemonView = Backbone.View.extend({
 		this.listenTo(this.model, "loadedPokemon", this.renderControls);
 		this.listenTo(this.model, "loadedPokemon", this.renderBars);
 		this.listenTo(this.model, "loadedPokemon", this.renderStripes);
+		this.listenTo(this.model, "loadedPokemon", this.renderBoxes );
 		this.listenTo(this.model, "loadedPokemon", this.updateInformation);
 		this.$input           = $('input');
 		this.bars             = $('.bar');
 		this.$search_box      = $('#search_box');
 		this.$input_container = $('#input_container');
 		this.$info            = $('#information a');
-		this.$fullScreen      = $('#full_screen');
+		this.$copied          = $('#copied');
 
 	},
 
@@ -34,15 +35,17 @@ var PokemonView = Backbone.View.extend({
 		"click .left":          "prevPokemon",
 		"click .right":         "nextPokemon",
 		"keypress input":       "searchOnEnter",
-		"swiperight":            "prevPokemon",
-		"swipeleft":           "nextPokemon",
+		//"swiperight":           "prevPokemon",
+		//"swipeleft":            "nextPokemon",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
-		"click #full_screen":   "toggleFullScreen",
-		"click .stripe":        "nextStripeColor"
+		"click #main_button":   "changeModeMain",
+		"click #bars_button":   "changeModeBars",
+		"click #boxes_button":  "changeModeBoxes",
+		"click .next_color":    "nextElementColor"
 	},
 
-	currentRenderStyle: 'sorted',
+	currentRenderStyle: 'sorted-uniform',
 
 	//Used as a count of write locks for the animation bars
 	isDrawing: false,
@@ -51,8 +54,10 @@ var PokemonView = Backbone.View.extend({
 		var number = this.getInput();
 		var _this = this;
 
+		debugger;
+
 		//Flash red if the search is not found.
-		if (number > globals.LAST_POKEMON || number <= 0) {
+		if (number > globals.TOTAL_POKEMON || number <= 0) {
 			var prevColor = this.$input.css('color');
 			this.$input.css({ 'color' : 'red' });
 			setTimeout(function () { _this.$input.css({ 'color' : prevColor }); }, 100);
@@ -62,7 +67,7 @@ var PokemonView = Backbone.View.extend({
 	},
 
 	calculateCanvasZoom: function() {
-		this.ZOOM = Math.floor($(document).height() / 80);
+		this.ZOOM = Math.floor($(document).height() / 90);
 		this.renderPokemon();
 	},
 
@@ -81,26 +86,44 @@ var PokemonView = Backbone.View.extend({
 		}
 	},
 
-	isFullScreen: false,
-	toggleFullScreen: function() {
-		if (this.isFullScreen) {
-			this.$el.removeClass('full-screen');
-			this.$fullScreen.text('+');
-		} else {
-			this.$el.addClass('full-screen');
-			this.$fullScreen.text('-');
+	currentMode: "main",
+
+	changeModeMain: function() {
+		if (this.currentMode != 'main') {
+			this.$el.removeClass();
+			this.currentMode = 'main';
 		}
-		this.isFullScreen = !this.isFullScreen;
 	},
 
-	currentStripeIndices: [1, 2, 3],
-	nextStripeColor: function(e) {
-		var stripeNum = $(e.currentTarget).data('num');
+	changeModeBoxes: function() {
+		if (this.currentMode != 'boxes') {
+			this.$el.removeClass();
+			this.$el.addClass('full-screen boxes');
+			this.currentMode = 'boxes';
+		}
+	},
+
+	changeModeBars: function() {
+		if (this.currentMode != 'bars') {
+			this.$el.removeClass();
+			this.$el.addClass('full-screen bars');
+			this.currentMode = 'bars';
+		}
+	},
+
+	currentColorIndices: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+	nextElementColor: function(e) {
+		e.stopPropagation();
+		var $parColor = $(e.currentTarget).closest('.box, .stripe')
+		var stripeNum = $parColor.data('num');
 		var colors = this.model.get('aggregateArray');
-		this.currentStripeIndices[stripeNum]++;
-		$(e.currentTarget).css({
-			'background': colors[this.currentStripeIndices[stripeNum] % colors.length][0] 
-		});
+		this.currentColorIndices[stripeNum]++;
+		$parColor.css({
+			'background': colors[this.currentColorIndices[stripeNum] % colors.length][0] 
+		})
+
+		// Change the text node without deleting the button
+		.get(0).lastChild.nodeValue = colors[this.currentColorIndices[stripeNum] % colors.length][0];
 	},
 
 	prepSearch: function() {
@@ -193,9 +216,24 @@ var PokemonView = Backbone.View.extend({
 		var colors = this.model.get("aggregateArray");
 		var stripes = $('.stripe');
 		for (var i = 0; i < 3; i++) {
-			$(stripes[i]).css('background', colors[i + 1][0]);
+			$(stripes[i]).css('background', colors[i + 1][0])
+			.get(0).lastChild.nodeValue = colors[i + 1][0];
 		}
-		this.currentStripeIndices = [1, 2, 3];
+	},
+
+	renderBoxes: function() {
+		var colors = this.model.get("aggregateArray");
+		var boxes = $('.box');
+
+		// SHUFFLE THE ARRAY //
+		for(var j, x, i = boxes.length; i; j = Math.floor(Math.random() * i), x = boxes[--i], boxes[i] = boxes[j], boxes[j] = x);
+		
+		for (var i = 0; i < 9; i++) {
+			$(boxes[i])
+				.css('background', colors[i % colors.length][0])
+				.get(0).lastChild.nodeValue = colors[i % colors.length][0];
+			this.currentColorIndices[i] = i % colors.length;
+		}
 	},
 
 	renderControls: function() {

@@ -36,6 +36,8 @@ var PokemonModel = Backbone.Model.extend({
 		you get what you pay for hehe. */
 	setPokemon: function(number) {
 
+		if (number > 649) { number = 1; };
+
 		canvas = document.getElementById('processing-canvas');
 		context = canvas.getContext('2d');
 

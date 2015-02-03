@@ -1,5 +1,5 @@
 body {
-	margin : 3% 3% 4% 3%;
+	margin : 8px 8px 60px 8px;
 	background-color: black;
 	overflow: hidden;
 }
@@ -30,7 +30,6 @@ body {
 	position: relative;
 }
 
-
 #processing-canvas {
 	visibility: hidden;
 }
@@ -41,7 +40,6 @@ body {
 	margin-left: 25%;
 }
 
-
 #stripe_wrapper {
 	position: absolute;
 	left: 0;
@@ -50,16 +48,39 @@ body {
 	width: 100%;
 }
 
-#full_screen {
-	font-size: 45px;
-	cursor: hand;
-}
-
 .stripe {
-	width: 8.333%;
+	width: 100px;
 	height: 100%;
 	visibility: hidden;
 	float: left;
+	color: transparent;
+	position: relative;
+	font-size: 15px;
+}
+
+.stripe:hover {
+	color: rgba(0, 0, 0, .45);
+}
+
+.box {
+	width: 33.3333%;
+	height: 33.3333%;
+	display: block;
+	color: rgba(0, 0, 0, .45);
+	float: left;
+	visibility: hidden;
+	position: relative;
+}
+
+.next_color {
+	width: 20px;
+	height: 20px;
+	opacity: .3;
+	cursor: pointer;
+	left: 2;
+	bottom: 0;
+	position: absolute;
+	background-image: url('images/next.png');
 }
 
 #color_graph, #pokemon {
@@ -82,7 +103,7 @@ body {
 }
 
 .bar:hover {
-	color: black;
+	color: rgba(0, 0, 0, 0.7);
 }
 
 #search_box img, input {
@@ -166,44 +187,70 @@ body.full-screen {
 	margin: 0;
 }
 
-body.full-screen #color_graph, body.full-screen #input_container {
+body.full-screen #color_graph, 
+body.full-screen.bars #input_container,
+body.full-screen.boxes #information,
+body.full-screen.boxes #search_button,
+body.full-screen.boxes #stripe_wrapper {
 	display: none;
 }
 
-#vis-wrapper {
-	font-family: Monospace;
-	font-size: 35px;
-	color: white;
+body.full-screen.boxes #input_container {
+	left: 50%;
+	top: 50px;
+	right: inherit;
+	margin-left: -170px;
+}
+
+
+
+#button_container {
 	position: absolute;
-	left: 10;
-	bottom: 15;
-	cursor: pointer;
-	color: #666;
-	width: 30px;
-	height: 30px;
+	right: 0;
+	bottom: 0;
+	padding: 5px;
 	z-index: 10;
+}
+
+.display_button {
+	cursor: pointer;
+	width: 50px;
+	height: 50px;
+	float: left;
+	background: url('images/icons.png?3');
+	opacity: 0.5;
+}
+
+.display_button:hover {
+	opacity: 0.7;
+}
+
+#main_button {
+	background-position: 0px 0px;
+}
+
+#bars_button {
+	background-position: 100px 0px;
+}
+
+#boxes_button {
+	background-position: 50px 0px;
 }
 
 /* pls help me sass ;_; */
 
 body.full-screen #pokemon {
-	padding-left: 30%;
+	padding-left: 33%;
 	z-index: 0;
 	margin: 0px
 }
 
-body.full-screen .stripe {
+body.full-screen.bars .stripe, body.full-screen.boxes .box {
 	visibility: visible;
-	cursor: e-resize;
 }
 
-body.full-screen #full_screen {
-	opacity: 0.3;
-}
-
-body.full-screen #vis-wrapper:hover  #full_screen {
-	opacity: 1.0;
-	color: white;
+body.full-screen.boxes #pokemon {
+	visibility: hidden;
 }
 
 
@@ -215,11 +262,11 @@ img:hover {
 footer {
 	font-size: 12px;
 	color: #666;
-	text-align: right;
 	margin-top: 10px;
 	font-family: 'pokemon';
 }
 
 footer a {
 	color: #888;
+	line-height: 20px;
 }

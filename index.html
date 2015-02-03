@@ -4,11 +4,15 @@
 		<meta charset="utf-8" />
 		<meta name="description" content="Explore color schemes and palettes generated from pokemon sprites!"/>
 		<link rel="icon" type="image/png" href="images/favicon.png"/>
+		<link rel="image_src" href="http://gus-glover.com/pokemon/images/thumb.png"/>
+		<meta property="og:image" content="http://gus-glover.com/pokemon/images/thumb.png"/>
+		<meta property="og:title" content="Pokemon Palettes"/>
+		<meta property="og:description" content="Explore the color schemes used to design Pokemon." />
 		<link href="pokemon.css" type="text/css" rel="stylesheet" />
 	</head>
 	<body>
 		<div id="app">
-
+			
 			<div id="color_graph">
 				<div class="bar"></div>
 				<div class="bar"></div>
@@ -27,9 +31,45 @@
 			</div>
 			
 			<div id="stripe_wrapper">
-				<div class="stripe" data-num="0"></div>
-				<div class="stripe" data-num="1"></div>
-				<div class="stripe" data-num="2"></div>
+				<div class="stripe" data-num="0">
+					<div class="next_color"></div>
+				</div>
+				<div class="stripe" data-num="1">
+					<div class="next_color"></div>
+				</div>
+				<div class="stripe" data-num="2">
+					<div class="next_color"></div>
+				</div>
+			</div>
+
+			<div id="box-wrapper">
+				<div class="box" data-num="0">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="1">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="2">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="3">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="4">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="5">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="6">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="7">
+					<div class="next_color"></div>
+				</div>
+				<div class="box" data-num="8">
+					<div class="next_color"></div>
+				</div>
 			</div>
 			
 			<canvas id="pokemon" class="unselectable" width="1000" height="1000"></canvas>
@@ -47,12 +87,17 @@
 		</div>
 
 		<footer>
-			swipe or use the arrow keys to navigate. have fun. <a href="http://www.gus-glover.com">(gus glover 2013)</a>
+				use the arrow keys to navigate. have fun. 
+				<br/>
+				<a href="http://www.gus-glover.com">(gus glover 2014)</a>
 		</footer>
 
-		<div id="vis-wrapper" class="unselectable">
-			<span id="full_screen">+</span>
+		<div id="button_container">
+			<div class="display_button" id="main_button"></div>
+			<div class="display_button" id="bars_button"></div>
+			<div class="display_button" id="boxes_button"></div>
 		</div>
+
 	</body>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="scripts/libs/jquery.mobile.custom.min.js"></script>
