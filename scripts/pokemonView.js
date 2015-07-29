@@ -30,13 +30,12 @@ var PokemonView = Backbone.View.extend({
 	el: "body",
 
 	events: {
-		"click #search_button": "search",
-		"click .bar":           "changeBarRenderStyle",
-		"click .left":          "prevPokemon",
-		"click .right":         "nextPokemon",
+		"blur input":           "search",
+		"click canvas":         "changeBarRenderStyle",
+		"click .bar":            "changeBarRenderStyle",
 		"keypress input":       "searchOnEnter",
-		//"swiperight":           "prevPokemon",
-		//"swipeleft":            "nextPokemon",
+		"swiperight":           "prevPokemon",
+		"swipeleft":            "nextPokemon",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
 		"click #main_button":   "changeModeMain",
@@ -45,7 +44,7 @@ var PokemonView = Backbone.View.extend({
 		"click .next_color":    "nextElementColor"
 	},
 
-	currentRenderStyle: 'sorted-uniform',
+	currentRenderStyle: 'sorted',
 
 	//Used as a count of write locks for the animation bars
 	isDrawing: false,
@@ -53,8 +52,6 @@ var PokemonView = Backbone.View.extend({
 	search: function() {
 		var number = this.getInput();
 		var _this = this;
-
-		debugger;
 
 		//Flash red if the search is not found.
 		if (number > globals.TOTAL_POKEMON || number <= 0) {
@@ -67,7 +64,10 @@ var PokemonView = Backbone.View.extend({
 	},
 
 	calculateCanvasZoom: function() {
-		this.ZOOM = Math.floor($(document).height() / 90);
+		this.ZOOM = Math.min(
+			Math.floor($(document).height() / 90), 
+			Math.floor($(document).width() / 60)
+		);
 		this.renderPokemon();
 	},
 
@@ -79,9 +79,9 @@ var PokemonView = Backbone.View.extend({
 
 	navigateLeftRight: function(e) {
 		if (document.activeElement.nodeName != "BODY") { return; }
-		if (e.keyCode == 39) {
+		if (e.keyCode == 39 || e.keyCode == 38 || e.keyCode == 32) {
 			this.nextPokemon();
-		} else if (e.keyCode == 37) {
+		} else if (e.keyCode == 37 || e.keyCode == 40) {
 			this.prevPokemon();
 		}
 	},
