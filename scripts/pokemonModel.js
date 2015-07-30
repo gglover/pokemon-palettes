@@ -11,7 +11,7 @@ var PokemonModel = Backbone.Model.extend({
 
 		var reqPokemon = _.indexOf(globals.ALL_POKEMON, location.hash.substr(1, location.hash.length)) + 1;
 		if (reqPokemon < 1) {
-			this.set('number', Math.ceil(Math.random() * globals.TOTAL_POKEMON));
+			this.set('number', Math.ceil(Math.random() * 150));
 		} else {
 			this.set('number', reqPokemon);
 		}

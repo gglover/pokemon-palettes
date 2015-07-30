@@ -263,6 +263,10 @@ img:hover {
 		display: none;
 	}
 
+	.bar {
+		width: 50vw;
+	}
+
 	body.full-screen.boxes #input_container {
 		margin: 10px;
 		left: 0;
