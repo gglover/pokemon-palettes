@@ -7,7 +7,7 @@ var PokemonView = Backbone.View.extend({
 
 	initialize: function() {
 		
-		//Manual binds... outside scope of events hash
+		// Manual binds... outside scope of events hash
 		this.calculateCanvasZoom();
 		 $(window).bind("resize.app", _.bind(this.calculateCanvasZoom, this));
 
@@ -25,6 +25,14 @@ var PokemonView = Backbone.View.extend({
 		this.$info            = $('#information a');
 		this.$copied          = $('#copied');
 
+		// Enable swiping on touch devices
+		if ('ontouchstart' in window || 'onmsgesturechange' in window) {
+			$("body").swipe( {
+		        swipeLeft: _.bind(this.prevPokemon, this),
+		        swipeRight: _.bind(this.nextPokemon, this) 
+		    });
+		}
+
 	},
 
 	el: "body",
@@ -34,8 +42,6 @@ var PokemonView = Backbone.View.extend({
 		"click canvas":         "changeBarRenderStyle",
 		"click .bar":           "changeBarRenderStyle",
 		"keypress input":       "searchOnEnter",
-		"swiperight":           "handleSwipe",
-		"swipeleft":            "handleSwipe",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
 		"click #main_button":   "changeModeMain",
@@ -74,16 +80,6 @@ var PokemonView = Backbone.View.extend({
 	searchOnEnter: function(e) {
 		if (e.which == 13) {
 			this.search();
-		}
-	},
-
-	handleSwipe: function(e) {
-		if (!this.isTouchDevice()) { return; }
-
-		if (e.type == "swiperight") {
-			this.nextPokemon();
-		} else {
-			this.prevPokemon();
 		}
 	},
 
@@ -286,10 +282,5 @@ var PokemonView = Backbone.View.extend({
 	isLight: function(color) {
 		var col =  parseInt(color.substr(1, 2), 16) + parseInt(color.substr(3, 2), 16) + parseInt(color.substr(5, 2), 16);
 		return col > 240 * 3;
-	},
-
-	isTouchDevice: function() {
-	 	return 'ontouchstart' in window
-	    || 'onmsgesturechange' in window;
 	}
 });
