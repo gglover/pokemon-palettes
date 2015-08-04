@@ -32,10 +32,10 @@ var PokemonView = Backbone.View.extend({
 	events: {
 		"blur input":           "search",
 		"click canvas":         "changeBarRenderStyle",
-		"click .bar":            "changeBarRenderStyle",
+		"click .bar":           "changeBarRenderStyle",
 		"keypress input":       "searchOnEnter",
-		"swiperight":           "prevPokemon",
-		"swipeleft":            "nextPokemon",
+		"swiperight":           "handleSwipe",
+		"swipeleft":            "handleSwipe",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
 		"click #main_button":   "changeModeMain",
@@ -74,6 +74,16 @@ var PokemonView = Backbone.View.extend({
 	searchOnEnter: function(e) {
 		if (e.which == 13) {
 			this.search();
+		}
+	},
+
+	handleSwipe: function(e) {
+		if (!this.isTouchDevice()) { return; }
+
+		if (e.type == "swiperight") {
+			this.nextPokemon();
+		} else {
+			this.prevPokemon();
 		}
 	},
 
@@ -276,5 +286,10 @@ var PokemonView = Backbone.View.extend({
 	isLight: function(color) {
 		var col =  parseInt(color.substr(1, 2), 16) + parseInt(color.substr(3, 2), 16) + parseInt(color.substr(5, 2), 16);
 		return col > 240 * 3;
+	},
+
+	isTouchDevice: function() {
+	 	return 'ontouchstart' in window
+	    || 'onmsgesturechange' in window;
 	}
 });
