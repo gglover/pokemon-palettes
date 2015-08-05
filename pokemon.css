@@ -197,7 +197,7 @@ body.full-screen.boxes #input_container {
 	clear: both;
 	float: right;
 	font-family: 'pokemon', monospace;
-	font-size: 6pt;
+	font-size: 5pt;
 	margin-top: 3px;
 	color: rgba(0,0,0,0.5);
 }
