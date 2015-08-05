@@ -193,7 +193,7 @@ body.full-screen.boxes #input_container {
 	z-index: 10;
 }
 
-#button_container a {
+#button_container span {
 	clear: both;
 	float: right;
 	font-family: 'pokemon', monospace;

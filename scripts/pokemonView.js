@@ -28,8 +28,8 @@ var PokemonView = Backbone.View.extend({
 		// Enable swiping on touch devices
 		if ('ontouchstart' in window || 'onmsgesturechange' in window) {
 			$("body").swipe( {
-		        swipeLeft: _.bind(this.prevPokemon, this),
-		        swipeRight: _.bind(this.nextPokemon, this) 
+		        swipeLeft: _.bind(this.nextPokemon, this),
+		        swipeRight: _.bind(this.prevPokemon, this) 
 		    });
 		}
 
