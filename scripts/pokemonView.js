@@ -40,7 +40,6 @@ var PokemonView = Backbone.View.extend({
 	events: {
 		"blur input":           "search",
 		"click canvas":         "changeBarRenderStyle",
-		"click .bar":           "changeBarRenderStyle",
 		"keypress input":       "searchOnEnter",
 		"keydown":              "navigateLeftRight",
 		"focus input":          "prepSearch",
