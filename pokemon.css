@@ -197,8 +197,10 @@ body.full-screen.boxes #input_container {
 	clear: both;
 	float: right;
 	font-family: 'pokemon', monospace;
-	font-size: 5pt;
+	font-size: 6pt;
 	margin-top: 3px;
+	line-height: 15px;
+	text-align: right;
 	color: rgba(0,0,0,0.5);
 }
 
@@ -249,7 +251,7 @@ img:hover {
 	cursor : hand;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
 	#input-container {
 		width: 30vw;
 		height: auto;
