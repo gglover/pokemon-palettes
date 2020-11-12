@@ -8,7 +8,7 @@ body {
 	font-family: 'pokemon';
 	src: url('pokemon-gb.ttf') format('truetype');
 	font-weight: normal;
-    font-style: normal;
+  font-style: normal;
 }
 
 .unselectable {
@@ -208,11 +208,12 @@ body.full-screen.boxes #input_container {
 	height: 50px;
 	float: right;
 	background: url('images/icons.png?3');
-	opacity: 0.5;
+	opacity: 0.3;
+	transition: opacity 0.25s linear;
 }
 
 .display_button:hover {
-	opacity: 0.7;
+	opacity: 0.5;
 }
 
 #main_button {
